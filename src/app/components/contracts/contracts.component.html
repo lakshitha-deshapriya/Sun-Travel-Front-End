@@ -1,0 +1,41 @@
+<br>
+
+<form [formGroup]="signupForm" class="form-inline row" (ngSubmit)="onSubmit()">
+  <label class="form-check-label" for="search">Search : </label>
+  <div class="mb-4 mr-sm-2 mb-sm-0" >
+    <input type="text"
+           class="form-control"
+           id="search"
+           placeholder="Search"
+           formControlName="hotelName"
+           style="margin-left: 10px;"
+            >
+  </div>
+</form>
+
+<br>
+
+<div *ngIf="getdata" >
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Hotel Name</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contract of contracts">
+        <th scope="row">{{contract.contractId}}</th>
+        <td>{{contract.ldHotelByHotelId.hotelName}}</td>
+        <td>{{contract.startDate}}</td>
+        <td>{{contract.endDate}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
