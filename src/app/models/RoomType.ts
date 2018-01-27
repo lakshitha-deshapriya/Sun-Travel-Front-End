@@ -1,4 +1,4 @@
-import {Contract} from "./Contract";
+import {Contract} from './Contract';
 
 export interface RoomType{
   typeId: number;

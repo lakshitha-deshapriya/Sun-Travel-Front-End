@@ -1,41 +1,53 @@
-<br>
-
-<form [formGroup]="signupForm" class="form-inline row" (ngSubmit)="onSubmit()">
-  <label class="form-check-label" for="search">Search : </label>
-  <div class="mb-4 mr-sm-2 mb-sm-0" >
-    <input type="text"
-           class="form-control"
-           id="search"
-           placeholder="Search"
-           formControlName="hotelName"
-           style="margin-left: 10px;"
-            >
-  </div>
-</form>
-
-<br>
-
-<div *ngIf="getdata" >
+<div class="container" style="padding-bottom: 50px; padding-top: 15px">
   <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Hotel Name</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let contract of contracts">
-        <th scope="row">{{contract.contractId}}</th>
-        <td>{{contract.ldHotelByHotelId.hotelName}}</td>
-        <td>{{contract.startDate}}</td>
-        <td>{{contract.endDate}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="col-md-9 d-flex align-items-start flex-column">
+      <mat-form-field >
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" >
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 d-flex align-items-end flex-column" style="padding-top: 15px;">
+      <button mat-raised-button color="primary" (click)="openDialog()" style="white-space: normal;">Add New Contract</button>
+    </div>
   </div>
+
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef style="text-align: center; max-width: 20px"> Id </mat-header-cell>
+      <mat-cell *matCellDef="let contract; let i=index" style="text-align: center; max-width: 20px">{{i+1}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="hotelName">
+      <mat-header-cell *matHeaderCellDef style="text-align: center"> Hotel Name </mat-header-cell>
+      <mat-cell *matCellDef="let contract" style="text-align: center"> {{contract.hotelName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="roomtypes">
+      <mat-header-cell *matHeaderCellDef style="text-align: center; max-width: 200px; white-space: normal;"> Room Types </mat-header-cell>
+      <mat-cell *matCellDef="let contract" style="text-align: center; max-width: 200px; white-space: normal;"> {{contract.roomTypes}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startdate">
+      <mat-header-cell *matHeaderCellDef style="text-align: center"> Start Date </mat-header-cell>
+      <mat-cell *matCellDef="let contract" style="text-align: center"> {{contract.startDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="enddate">
+      <mat-header-cell *matHeaderCellDef style="text-align: center"> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let contract" style="text-align: center"> {{contract.endDate}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="button">
+      <mat-header-cell *matHeaderCellDef style="max-width: 80px"></mat-header-cell>
+      <mat-cell *matCellDef="let contract" style="max-width: 80px"><button mat-button routerLink=".">Edit</button></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>
+
+
+
+
 
 

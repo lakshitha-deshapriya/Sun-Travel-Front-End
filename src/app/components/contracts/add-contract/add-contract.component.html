@@ -1,0 +1,223 @@
+<div style="max-height: 560px">
+  <div class="container" style="padding-bottom: 50px; padding-top: 15px;">
+    <h2 style="text-align: center; color: rgba(107,120,141,0.87)">Add Contract</h2>
+    <form [formGroup]="addContract">
+      <p style="color: darkgray; font-size: small"> Contract Details </p>
+      <table cellspacing="1"><tr>
+        <td>
+          <mat-form-field style="width: 250px">
+            <input type="text"
+                   matInput
+                   formControlName="hotelName"
+                   placeholder="Hotel Name">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field>
+            <input matInput
+                   [matDatepicker]="picker1"
+                   placeholder="Start Date"
+                   formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field>
+            <input matInput
+                   [matDatepicker]="picker2"
+                   placeholder="End Date"
+                   formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr></table>
+
+      <br>
+
+      <p style="color: darkgray; font-size: small"> Room Type Details </p>
+
+      <table cellspacing="1"><tr>
+        <td>
+          <mat-form-field>
+            <input type="text"
+                   matInput
+                   formControlName="roomType"
+                   placeholder="Room Type">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 90px">
+            <input type="number"
+                   min="1"
+                   matInput
+                   placeholder="Rooms"
+                   formControlName="noofrooms"
+                   style="text-align: center">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 90px">
+            <input type="number"
+                   min="1"
+                   matInput
+                   placeholder="Max Adults"
+                   formControlName="maxAdults"
+                   style="text-align: center">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 100px">
+            <input type="number"
+                   min="0"
+                   matInput
+                   placeholder="Price"
+                   formControlName="price"
+                   style="text-align: center">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 80px">
+            <input type="number"
+                   min="0"
+                   matInput
+                   placeholder="Markup"
+                   formControlName="markup"
+                   style="text-align: center">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <button mat-button
+                  color="primary"
+                  (click)="onAdd()"
+                  [disabled]="(!addContract.get('roomType').valid) ||
+                               (!addContract.get('noofrooms').valid) ||
+                               (!addContract.get('maxAdults').valid) ||
+                               (!addContract.get('price').valid) ||
+                               (!addContract.get('markup').valid)">Add</button>
+        </td>
+      </tr></table>
+
+      <div *ngIf="multiRoomTypes.length !== 0">
+        <mat-grid-list cols="20" rowHeight="20:1" >
+          <mat-grid-tile [colspan]=5 [rowspan]=12 style="background-color: lightgray; border-radius: 3px"> <strong>Room Type</strong></mat-grid-tile>
+          <mat-grid-tile [colspan]=3 [rowspan]=12 style="background-color: lightgray; border-radius: 3px"> <strong>Rooms</strong></mat-grid-tile>
+          <mat-grid-tile [colspan]=3 [rowspan]=12 style="background-color: lightgray; border-radius: 3px"> <strong>Adults</strong></mat-grid-tile>
+          <mat-grid-tile [colspan]=3 [rowspan]=12 style="background-color: lightgray; border-radius: 3px"> <strong>Price</strong></mat-grid-tile>
+          <mat-grid-tile [colspan]=3 [rowspan]=12 style="background-color: lightgray; border-radius: 3px"> <strong>Markup</strong></mat-grid-tile>
+          <mat-grid-tile [colspan]=3 [rowspan]=12 ></mat-grid-tile>
+          <div *ngFor="let rt of multiRoomTypes; let i=index">
+            <mat-grid-tile [colspan]=5 [rowspan]=12>{{rt.roomType}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=3 [rowspan]=12>{{rt.noOfRooms}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=3 [rowspan]=12>{{rt.maxAdults}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=3 [rowspan]=12>{{rt.price}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=3 [rowspan]=12>{{rt.markup}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=3 [rowspan]=12><button mat-button color="warn" (click)="onDelete(i)">Remove</button></mat-grid-tile>
+          </div>
+        </mat-grid-list>
+      </div>
+
+      <br>
+
+      <p style="color: darkgray; font-size: small"> Contact Details </p>
+
+      <table cellspacing="1"><tr>
+        <td>
+          <mat-form-field style="width: 250px">
+            <input type="text"
+                   matInput
+                   formControlName="phone"
+                   placeholder="Phone Number">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 250px">
+            <input type="email"
+                   matInput
+                   formControlName="email"
+                   placeholder="Email">
+            <mat-error *ngIf="addContract.get('email').hasError('email') && !addContract.get('email').hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr></table>
+
+      <table cellspacing="1"><tr>
+        <td>
+          <mat-form-field style="width: 70px">
+            <input type="text"
+                   matInput
+                   formControlName="pbox"
+                   placeholder="Post Box" >
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 230px">
+            <input type="text"
+                   matInput
+                   formControlName="region"
+                   placeholder="Region" >
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 140px">
+            <input type="text"
+                   matInput
+                   formControlName="city"
+                   placeholder="City">
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 120px">
+            <mat-select
+              placeholder="Country"
+              formControlName="country">
+              <mat-option *ngFor="let country of countries"
+                          [value]="country.countryName">
+                {{ country.countryName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td style="padding-left: 10px">
+          <mat-form-field style="width: 80px">
+            <input type="text"
+                   matInput
+                   formControlName="zipcode"
+                   placeholder="Zip Code">
+          </mat-form-field>
+        </td>
+      </tr></table>
+
+      <table>
+        <tr>
+          <td><button mat-raised-button
+                      color="primary"
+                      (click)="onSubmit()"
+                      [disabled]="(!addContract.get('hotelName').valid) ||
+                               (!addContract.get('startDate').valid) ||
+                               (!addContract.get('endDate').valid) ||
+                               (!addContract.get('phone').valid) ||
+                               (!addContract.get('email').valid) ||
+                               (!addContract.get('pbox').valid) ||
+                               (!addContract.get('city').valid) ||
+                               (!addContract.get('country').valid) ||
+                               (multiRoomTypes.length === 0)">Save</button>
+          </td>
+          <td style="padding-left: 30px">
+            <button mat-raised-button
+                    color="primary"
+                    (click)="onClear()">Clear</button>
+          </td>
+          <td style="padding-left: 30px">
+            <button mat-raised-button
+                    color="warn"
+                    (click)="onClose()">Go Back</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>

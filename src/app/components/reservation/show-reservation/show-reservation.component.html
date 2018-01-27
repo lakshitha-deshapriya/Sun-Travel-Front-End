@@ -1,0 +1,88 @@
+<mat-card class="example-card" style="margin-bottom: 10px; border-radius: 5px">
+  <table cellspacing="1">
+    <tr>
+      <td>
+        <strong>Customer Name</strong>
+      </td>
+      <td style="padding-left: 10px">
+        {{fName + " " +lName}}
+      </td>
+    </tr>
+  </table>
+</mat-card>
+
+<mat-card class="example-card" style="margin-bottom: 10px; border-radius: 5px">
+  <table cellspacing="1">
+    <tr>
+      <td>
+        <strong>Hotel Name</strong>
+      </td>
+      <td style="padding-left: 10px">
+        {{hotelName}}
+      </td>
+    </tr>
+  </table>
+</mat-card>
+
+
+
+  <!--<mat-grid-list cols="8" rowHeight="8:1">-->
+    <!--<mat-grid-tile [rowspan]=8 style="background-image: url(../../../assets/building.ico); background-size: cover; border-radius: 5px;"></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=7 [rowspan]=2 style="background-color: lavender; border-radius: 5px "><strong>{{hotel.hotelName}}</strong></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=2 [rowspan]=2> <strong>Room Type</strong></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=2 [rowspan]=2> <strong>No. Rooms</strong></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=1 [rowspan]=2> <strong>Max Adults</strong></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=1 [rowspan]=2> <strong>Price</strong></mat-grid-tile>-->
+    <!--<mat-grid-tile [colspan]=1 [rowspan]=2></mat-grid-tile>-->
+    <!--<div *ngFor="let availability of availabilities; let j=index;">-->
+      <!--<div *ngIf="checkHotelRoomTypes(availability.ldRoomTypeByTypeId.ldContractsByContractId.ldHotelByHotelId.hotelName,hotel.hotelName,i)" style="padding-bottom: 7px">-->
+        <!--<div *ngIf="noOfRoomTypes>=3">-->
+          <!--<mat-grid-tile [colspan]=1 [rowspan]=2></mat-grid-tile>-->
+        <!--</div>-->
+        <!--<mat-grid-tile [colspan]=2 [rowspan]=2>{{availability.ldRoomTypeByTypeId.type}}</mat-grid-tile>-->
+        <!--<mat-grid-tile [colspan]=2 [rowspan]=2>{{availability.availableNoRooms}}</mat-grid-tile>-->
+        <!--<mat-grid-tile [colspan]=1 [rowspan]=2>{{availability.ldRoomTypeByTypeId.maxAdults}}</mat-grid-tile>-->
+        <!--<mat-grid-tile [colspan]=1 [rowspan]=2>{{availability.ldRoomTypeByTypeId.price*((100+availability.ldRoomTypeByTypeId.markup)/100) | number : '1.2-2'}}</mat-grid-tile>-->
+        <!--<mat-grid-tile [colspan]=1 [rowspan]=2><button mat-raised-button color="primary" (click)="onClick(availability)" style="border-radius: 5px">Reserve</button></mat-grid-tile>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</mat-grid-list>-->
+
+
+<!--<div class="row">-->
+  <!--<div class="col-md-3`">-->
+    <!--<ul class="list-group">-->
+      <!--<li class="list-group-item">Customer Name</li>-->
+      <!--<li class="list-group-item">HotelName</li>-->
+      <!--<li class="list-group-item">Room Type</li>-->
+      <!--<li class="list-group-item">Check In Date</li>-->
+      <!--<li class="list-group-item">No of Rooms</li>-->
+      <!--<li class="list-group-item">No of Nights</li>-->
+      <!--<li class="list-group-item">No of Adults</li>-->
+      <!--<li class="list-group-item">Phone Number</li>-->
+      <!--<li class="list-group-item">Email</li>-->
+      <!--<li class="list-group-item">Address</li>-->
+      <!--<li class="list-group-item">zipcode</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+  <!--<div class="col-md-4">-->
+    <!--<ul class="list-group">-->
+      <!--<li class="list-group-item">{{reservationData.fname+" "+reservationData.lname}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.hotelName}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.roomtype}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.checkindate}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.noofrooms}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.noofnights}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.noofadults}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.phone}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.email}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.pbox+", "+reservationData.region+", "+reservationData.city+", "+reservationData.country}}</li>-->
+      <!--<li class="list-group-item">{{reservationData.zipcode}}</li>-->
+    <!--</ul>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+  <!--<button type="submit" class="btn btn-primary" routerLink="/home" style="margin-top: 30px">Go Back to Home</button>-->
+<!--</div>-->
+
+

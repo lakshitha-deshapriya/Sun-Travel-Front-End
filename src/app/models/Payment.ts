@@ -1,4 +1,4 @@
-import {Accommodation} from "./Accommodation";
+import {Accommodation} from './Accommodation';
 
 export interface Payment{
   paymentId: number;

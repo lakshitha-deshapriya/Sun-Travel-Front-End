@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Contract} from '../../models/Contract';
 import {ContractService} from '../../services/contract.service';
+import {ContractTable} from '../../models/ContractTable';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {AddContractComponent} from './add-contract/add-contract.component';
+import {ShowContractComponent} from './show-contract/show-contract.component';
+
 
 @Component({
   selector: 'app-contracts',
@@ -9,31 +15,46 @@ import {ContractService} from '../../services/contract.service';
   styleUrls: ['./contracts.component.css']
 })
 export class ContractsComponent implements OnInit {
-  signupForm: FormGroup;
-  getdata = false;
-  check= false;
   contracts: Contract[];
-  hotel = null;
+  tableContracts: ContractTable[];
 
-  ngOnInit(){
-    this.signupForm = new FormGroup({
-      'hotelName': new FormControl(null)
-    });
+  displayedColumns = ['id', 'hotelName', 'roomtypes', 'startdate', 'enddate', 'button'];
+  dataSource;
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
-  constructor(private contractService: ContractService) {
+  ngOnInit() {
+
   }
 
-  onSubmit(){
-    this.hotel = JSON.stringify(this.signupForm.value.valueOf('hotelName'));
-    this.contractService.getContractData(this.hotel).subscribe(
-      (contracts: Contract[]) => {
-        this.contracts = contracts;
-        console.log(contracts);
+  constructor(private contractService: ContractService, public dialog: MatDialog) {
+    this.getAllContracts();
+  }
+
+  getAllContracts(){
+    this.contractService.getAllContracts().subscribe(
+      (contracts: ContractTable[]) => {
+        this.tableContracts = contracts;
+        this.dataSource = new MatTableDataSource<ContractTable>(this.tableContracts);
       },
       (error) => console.log(error)
     );
-    this.getdata = true;
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(AddContractComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllContracts();
+      // this.dialog.open(ShowContractComponent);
+    });
+  }
 }
+
+
+
+

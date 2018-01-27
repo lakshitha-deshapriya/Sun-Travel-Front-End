@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Response } from '@angular/http';
 import {environment} from '../../environments/environment.prod';
+import {Availabaility} from '../models/Availabaility';
 
 @Injectable()
 export class SearchService {

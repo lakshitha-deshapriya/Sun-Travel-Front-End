@@ -1,4 +1,4 @@
-import {Hotel} from "./Hotel";
+import {Hotel} from './Hotel';
 
 export interface Contract{
   contractId: number;

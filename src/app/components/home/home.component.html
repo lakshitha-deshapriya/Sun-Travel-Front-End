@@ -1,75 +1,70 @@
-<form [formGroup]="signupForm" class="form-inline row" >
-  <label class="form-check-label" for="date">Date : </label>
-  <input type="date"
-         class="form-control mb-2 mr-sm-2 mb-sm-0 ng-invalid.ng-touched"
-         id="date"
-         formControlName="date"
-         style="margin-left: 10px">
+<div class="container" style="padding-bottom: 50px; padding-top: 15px">
+  <form [formGroup]="signupForm">
+    <mat-form-field>
+      <input matInput
+             [matDatepicker]="picker"
+             placeholder="Choose a date"
+             formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker" required></mat-datepicker-toggle>
+      <mat-datepicker touchUi="true" #picker></mat-datepicker>
+      <mat-error *ngIf="!signupForm.get('date').valid">
+        Select a Date
+      </mat-error>
+    </mat-form-field>
 
-  <label class="form-check-label" for="nonights">Nights : </label>
-  <div class="mb-4 mr-sm-2 mb-sm-0" >
-    <input type="number"
-           min="0"
-           class="form-control"
-           id="nonights"
-           formControlName="nights"
-           style="margin-left: 10px; width: 60px">
-  </div>
+    <mat-form-field class="example-full-width" style="width: 80px; margin-left: 30px">
+      <input type="number"
+             min="1"
+             matInput
+             placeholder="Nights"
+             formControlName="nights">
+    </mat-form-field>
 
-  <label class="form-check-label" for="norooms">Rooms : </label>
-  <div class="mb-4 mr-sm-2 mb-sm-0" >
-    <input type="number"
-           min="0"
-           class="form-control"
-           id="norooms"
-           formControlName="rooms"
-           style="margin-left: 10px; width: 60px">
-  </div>
+    <mat-form-field class="example-full-width" style="width: 80px; margin-left: 30px">
+      <input type="number"
+             min="0"
+             matInput
+             placeholder="Rooms"
+             formControlName="rooms">
+    </mat-form-field>
 
-  <label class="form-check-label" for="noadults">Adults : </label>
-  <div class="mb-4 mr-sm-2 mb-sm-0" >
-    <input type="number"
-           min="0"
-           class="form-control"
-           id="noadults"
-           formControlName="adults"
-           style="margin-left: 10px; width: 60px">
-  </div>
+    <mat-form-field class="example-full-width" style="width: 80px; margin-left: 30px">
+      <input type="number"
+             min="0"
+             matInput
+             placeholder="Adults"
+             formControlName="adults">
+    </mat-form-field>
 
-  <div class="mb-4 mr-sm-2 mb-sm-0" >
-    <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid" (click)="onSubmit()">Submit</button>
-  </div>
+    <button mat-raised-button color="primary" (click)="onSubmit()" style="margin-left: 30px">Search</button>
 
-</form>
+  </form>
 
-<p class="alert alert-danger" role="alert" *ngIf="!signupForm.get('date').valid && signupForm.get('date').touched">Please enter a date.</p>
-
-
-<div *ngIf="getdata">
-  <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Hotel Name</th>
-          <th>Room Type</th>
-          <th>Available Rooms</th>
-          <th>Adults</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-
-      <tbody>
-      <tr *ngFor="let availability of availabilities; let i=index;" >
-        <!--{!*ngIf="no_adults<=availability.availableNoRooms*availability.ldRoomTypeByTypeId.maxAdults!}-->
-        <th scope="row">{{i+1}}</th>
-        <td>{{availability.ldRoomTypeByTypeId.ldContractsByContractId.ldHotelByHotelId.hotelName}}</td>
-        <td>{{availability.ldRoomTypeByTypeId.type}}</td>
-        <td>{{availability.availableNoRooms}}</td>
-        <td>{{availability.ldRoomTypeByTypeId.maxAdults}}</td>
-        <td>{{availability.ldRoomTypeByTypeId.price*((100+availability.ldRoomTypeByTypeId.markup)/100)}}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div *ngFor="let hotel of availableHotels; let i=index;" >
+    <mat-card style="margin-bottom: 10px; border-radius: 5px">
+      <mat-grid-list cols="8" rowHeight="8:1">
+        <mat-grid-tile [rowspan]=8 style="background-image: url(../../../assets/building.ico); background-size: cover; border-radius: 5px;"></mat-grid-tile>
+        <mat-grid-tile [colspan]=7 [rowspan]=2 style="background-color: lavender; border-radius: 5px "><strong>{{hotel.hotelName}}</strong></mat-grid-tile>
+        <mat-grid-tile [colspan]=2 [rowspan]=2> <strong>Room Type</strong></mat-grid-tile>
+        <mat-grid-tile [colspan]=2 [rowspan]=2> <strong>No. Rooms</strong></mat-grid-tile>
+        <mat-grid-tile [colspan]=1 [rowspan]=2> <strong>Max Adults</strong></mat-grid-tile>
+        <mat-grid-tile [colspan]=1 [rowspan]=2> <strong>Price</strong></mat-grid-tile>
+        <mat-grid-tile [colspan]=1 [rowspan]=2></mat-grid-tile>
+        <div *ngFor="let availability of availabilities; let j=index;">
+          <div *ngIf="checkHotelRoomTypes(availability.ldRoomTypeByTypeId.ldContractsByContractId.ldHotelByHotelId.hotelName,hotel.hotelName,i)" style="padding-bottom: 7px">
+            <div *ngIf="noOfRoomTypes>=3">
+              <mat-grid-tile [colspan]=1 [rowspan]=2></mat-grid-tile>
+            </div>
+            <mat-grid-tile [colspan]=2 [rowspan]=2>{{availability.ldRoomTypeByTypeId.type}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=2 [rowspan]=2>{{availability.availableNoRooms}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=1 [rowspan]=2>{{availability.ldRoomTypeByTypeId.maxAdults}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=1 [rowspan]=2>{{availability.ldRoomTypeByTypeId.price*((100+availability.ldRoomTypeByTypeId.markup)/100) | number : '1.2-2'}}</mat-grid-tile>
+            <mat-grid-tile [colspan]=1 [rowspan]=2><button mat-raised-button color="primary" (click)="onClick(availability)" style="border-radius: 5px">Reserve</button></mat-grid-tile>
+          </div>
+        </div>
+      </mat-grid-list>
+    </mat-card>
   </div>
 </div>
+
+
